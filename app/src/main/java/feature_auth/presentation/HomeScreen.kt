@@ -41,7 +41,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-// Mock Transaction Entity for Section 3
 data class Transaction(
     val id: String,
     val name: String,
@@ -50,7 +49,6 @@ data class Transaction(
     val date: String      // e.g., "Today", "Yesterday"
 )
 
-// Service item representation for Section 2
 data class ServiceItem(
     val name: String,
     val icon: ImageVector
@@ -58,6 +56,7 @@ data class ServiceItem(
 
 @Composable
 fun HomeScreen(
+    userName: String = "John Doe",
     modifier: Modifier = Modifier
 ) {
     val transactions = listOf(
@@ -79,7 +78,16 @@ fun HomeScreen(
                 .background(Color.Red)
                 .padding(20.dp)
         ) {
-            // Requirement 1.1: "Main Balance" around top-left corner
+            // new: Good Morning greeting text placed at the very top of the red header
+            Text(
+                text = "Good Morning, $userName",
+                color = Color.White,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+
+            // existing
             Text(
                 text = "Main Balance",
                 color = Color.White.copy(alpha = 0.8f),
@@ -87,9 +95,10 @@ fun HomeScreen(
                 fontWeight = FontWeight.Medium
             )
 
+            // existing
             Spacer(modifier = Modifier.height(6.dp))
 
-            // Requirement 1.2: Balance in 8 stars
+            // existing
             Text(
                 text = "********",
                 color = Color.White,
@@ -98,14 +107,15 @@ fun HomeScreen(
                 letterSpacing = 2.sp
             )
 
+            // existing
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Requirement 1.3: Reward Balance and Errif Balance side by side in a row
+            // existing
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // Reward Balance Column
+                // existing
                 Column {
                     Text(
                         text = "Reward Balance",
@@ -121,7 +131,7 @@ fun HomeScreen(
                     )
                 }
 
-                // Errif Balance Column
+                // existing
                 Column {
                     Text(
                         text = "Errif Balance",
@@ -141,7 +151,6 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // PART 2: 6 Grid Quick-Action Buttons (2 Rows x 3 Columns)
         val services = listOf(
             ServiceItem("Merchant Payment", Icons.Default.AddCard),
             ServiceItem("Bill Payment", Icons.Default.ReceiptLong),
@@ -163,7 +172,6 @@ fun HomeScreen(
                 modifier = Modifier.padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                // First Row (First 3 items)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
@@ -173,7 +181,6 @@ fun HomeScreen(
                     }
                 }
 
-                // Second Row (Remaining 3 items)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
@@ -185,9 +192,10 @@ fun HomeScreen(
             }
         }
 
+        // existing
         Spacer(modifier = Modifier.height(16.dp))
 
-        // PART 3: Recent Transactions List
+        // existing
         Text(
             text = "Recent Transactions",
             fontSize = 16.sp,
@@ -196,6 +204,7 @@ fun HomeScreen(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         )
 
+        // existing
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
@@ -209,6 +218,7 @@ fun HomeScreen(
     }
 }
 
+// existing
 @Composable
 private fun ServiceButton(
     service: ServiceItem,
@@ -248,6 +258,7 @@ private fun ServiceButton(
     }
 }
 
+// existing
 @Composable
 private fun TransactionRow(
     transaction: Transaction
@@ -264,7 +275,6 @@ private fun TransactionRow(
                 .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Icon representation based on category
             Box(
                 modifier = Modifier
                     .size(40.dp)
@@ -281,7 +291,6 @@ private fun TransactionRow(
 
             Spacer(modifier = Modifier.width(12.dp))
 
-            // User name & category
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = transaction.name,
@@ -296,7 +305,6 @@ private fun TransactionRow(
                 )
             }
 
-            // Amount & Date
             Column(horizontalAlignment = Alignment.End) {
                 val isPositive = transaction.amount.startsWith("+")
                 Text(
